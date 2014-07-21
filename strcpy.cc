@@ -5,7 +5,7 @@ char* strcpy(char* to , char const* from)
 {
     assert(to != NULL && from != NULL);
     char* p = to;
-    while( (*p++ = *from++) )
+    while((*p++ = *from++))
     {
     }
     return to;
