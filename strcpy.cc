@@ -5,7 +5,7 @@ char* strcpy(char* to , char const* from)
 {
     assert(to != NULL && from != NULL);
     char* p = to;
-    while( (*p++ = *from++) != '\0')
+    while( (*p++ = *from++) )
     {
     }
     return to;
@@ -14,8 +14,8 @@ char* strcpy(char* to , char const* from)
 int main(void)
 {
     char from[] = "hello";
-    char to[] = "worldhello";
-    strcpy(to , from);
-    printf("%s\n" , to);
+    char to[] = "worldworld";
+    strcpy(from , to);
+    printf("%s\n" , from);
     return 0;
 }
