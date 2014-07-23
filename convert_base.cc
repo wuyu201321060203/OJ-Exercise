@@ -11,7 +11,7 @@ void convert_base(int decimal , int const d) //d<=16
         decimal /= d;
     }
     for(auto i = result.rbegin() ; i != result.rend() ; ++i)
-        printf("%d" , *i);
+        printf("%x" , *i);
     printf("\n");
 }
 
