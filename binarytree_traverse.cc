@@ -39,6 +39,15 @@ void in_order(BinaryTreeNode* root , VisitFunctor const& func)
     in_order(root->right_ , func);
 }
 
+void post_order(BinaryTreeNode* root , VisitFunctor const& func)
+{
+    if(root == NULL)
+        return;
+    pre_order(root->left_ , func);
+    pre_order(root->right_ , func);
+    func(root);
+}
+
 void visit(BinaryTreeNode* node)
 {
     printf("%d\n" , node->value_);
@@ -52,5 +61,7 @@ int main(void)
     pre_order(&root , boost::bind(&visit , _1));
     printf("########\n");
     in_order(&root , boost::bind(&visit , _1));
+    printf("########\n");
+    post_order(&root , boost::bind(&visit , _1));
     return 0;
 }
