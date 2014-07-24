@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <queue>
 
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
@@ -19,6 +20,7 @@ struct BinaryTreeNode
     TreeNodeElement value_;
 };
 
+typedef std::queue<BinaryTreeNode*> TreeNodeQueue;
 typedef boost::function<void (BinaryTreeNode*)> VisitFunctor;
 
 void pre_order(BinaryTreeNode* root , VisitFunctor const& func)
@@ -43,9 +45,27 @@ void post_order(BinaryTreeNode* root , VisitFunctor const& func)
 {
     if(root == NULL)
         return;
-    pre_order(root->left_ , func);
-    pre_order(root->right_ , func);
+    post_order(root->left_ , func);
+    post_order(root->right_ , func);
     func(root);
+}
+
+void level_order(BinaryTreeNode* root , VisitFunctor const& func)
+{
+    if(root == NULL)
+        return;
+    TreeNodeQueue queue;
+    queue.push(root);
+    while(!queue.empty())
+    {
+        BinaryTreeNode* node = queue.front();
+        queue.pop();
+        func(node);
+        if(node->left_ != NULL)
+            queue.push(node->left_);
+        if(node->right_ != NULL)
+            queue.push(node->right_);
+    }
 }
 
 void visit(BinaryTreeNode* node)
@@ -55,13 +75,17 @@ void visit(BinaryTreeNode* node)
 
 int main(void)
 {
-    BinaryTreeNode left(NULL , NULL , 2);
-    BinaryTreeNode right(NULL , NULL , 3);
+    BinaryTreeNode leftleft(NULL , NULL , 4);
+    BinaryTreeNode leftright(NULL , NULL , 5);
+    BinaryTreeNode left(&leftleft , &leftright , 2);
+    BinaryTreeNode right(NULL, NULL , 3);
     BinaryTreeNode root(&left , &right , 1);
     pre_order(&root , boost::bind(&visit , _1));
     printf("########\n");
     in_order(&root , boost::bind(&visit , _1));
     printf("########\n");
     post_order(&root , boost::bind(&visit , _1));
+    printf("########\n");
+    level_order(&root , boost::bind(&visit , _1));
     return 0;
 }
