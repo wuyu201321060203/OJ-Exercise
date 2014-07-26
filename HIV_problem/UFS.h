@@ -32,12 +32,22 @@ public:
         }
         else
         {
-            array_[x] += array_[y];
-            array_[y] = x;
+            if(x <= y)
+            {
+                array_[lhs] += array_[rhs];
+                array_[rhs] = lhs;
+            }
+            else
+            {
+                array_[rhs] += array_[lhs];
+                array_[lhs] = rhs;
+
+            }
+            return 0;
         }
     }
 
-    UINT UFSGetSetSize(UINT x);
+    UINT UFSGetSetSize(UINT x)
     {
         UINT rt = UFSFind(x);
         return -array_[rt];
