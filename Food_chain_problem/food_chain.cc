@@ -50,7 +50,7 @@ void ufs_add_relation(ufs_t* ufs , int x , int y , int relation)
     int px = ufs_find(ufs , x);
     int py = ufs_find(ufs , y);
     ufs_union(ufs , py , px);
-    ufs->dist[px] = (ufs->dist[y] - ufs->dist[x] + relation - 1 + 3) % 3;
+    ufs->dist[px] = (ufs->dist[y] - ufs->dist[x] + relation  + 3) % 3;
 }
 
 int main()
